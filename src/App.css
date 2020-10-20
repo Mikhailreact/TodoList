@@ -1,0 +1,20 @@
+.App {
+  padding: 30px;
+  display: flex;
+}
+
+.App > div {
+  margin-right: 50px;
+}
+body {
+  background: url("image/Backroundimg.jpg");
+}
+
+.App {
+  width: 200px;
+  margin: 20px;
+  padding: 30px;
+  display: flex;
+  border: 3px solid #fff; /* Белая рамка */
+  border-radius: 10px; /* Радиус скругления */
+}
