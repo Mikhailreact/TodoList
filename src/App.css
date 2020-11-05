@@ -1,20 +1,50 @@
 .App {
-  padding: 30px;
   display: flex;
 }
 
 .App > div {
-  margin-right: 50px;
 }
 body {
   background: url("image/Backroundimg.jpg");
 }
 
-.App {
-  width: 200px;
+.App > div {
+  height: auto;
+  width: auto;
   margin: 20px;
-  padding: 30px;
-  display: flex;
+  padding: 20px;
   border: 3px solid #fff; /* Белая рамка */
   border-radius: 10px; /* Радиус скругления */
+  position: relative;
+  white-space: pre-wrap;
 }
+
+.btnDelete {
+  float: right;
+
+}
+.btn_3 {
+  display: flex;
+  justify-content: space-between;
+}
+.ullibtn{
+  margin-top: 5px;
+}
+
+.error {
+  border: red 1px solid;
+}
+
+.error-message {
+  color: red;
+}
+
+.active-filter {
+  background-color: #31beb7;
+}
+
+.is-done {
+  opacity: 0.5;
+}
+
+
