@@ -18,6 +18,11 @@ body {
   position: relative;
   white-space: pre-wrap;
 }
+.heading{
+ color: red;
+  float: left;
+
+}
 
 .btnDelete {
   float: right;
@@ -32,11 +37,12 @@ body {
 }
 
 .error {
-  border: red 1px solid;
+  border: #ae0101 2px solid;
 }
 
 .error-message {
-  color: red;
+  color: #ae0101;
+  font-weight: bold;
 }
 
 .active-filter {
