@@ -2,26 +2,23 @@ import React, {useState} from 'react';
 import './App.css';
 import {TodoList} from "./TodoList";
 import {v1} from "uuid";
+import {AddItemForm} from "./AddItemForm";
 
 export type TaskType = {
     id: string
     title: string
     isDone: boolean
 };
-
 export type FilterValuesType = "all" | "active" | "completed"
-
 type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
 }
-
 type TaskStateTape = {
     [key: string]: Array<TaskType>
 }
 
-// это логика бизнес логига
 function App() {
 
     const todoListID1 = v1();
@@ -33,20 +30,19 @@ function App() {
     ])
 
     const [tasks, setTasks] = useState<TaskStateTape>({
-            [todoListID1]: [
-                {id: v1(), title: "React", isDone: false},
-                {id: v1(), title: "HTML", isDone: true},
-                {id: v1(), title: "CSS", isDone: true},
-                {id: v1(), title: "Redux", isDone: false},
-                {id: v1(), title: "SaSS", isDone: true},
-            ],
-            [todoListID2]: [
-                {id: v1(), title: "Beer", isDone: false},
-                {id: v1(), title: "Fish", isDone: true},
-                {id: v1(), title: "Chips", isDone: true},
-            ]
-        }
-    )
+        [todoListID1]: [
+            {id: v1(), title: "React", isDone: false},
+            {id: v1(), title: "HTML", isDone: true},
+            {id: v1(), title: "CSS", isDone: true},
+            {id: v1(), title: "Redux", isDone: false},
+            {id: v1(), title: "SaSS", isDone: true},
+        ],
+        [todoListID2]: [
+            {id: v1(), title: "Beer", isDone: false},
+            {id: v1(), title: "Fish", isDone: true},
+            {id: v1(), title: "Chips", isDone: true},
+        ]
+    })
 
     function changeFilter(newFilterValue: FilterValuesType, todoListID: string) {
         const todoList = todoLists.find(tl => tl.id === todoListID)
@@ -67,7 +63,8 @@ function App() {
         let newTask: TaskType = {
             id: v1(),
             title: title,
-            isDone: false}
+            isDone: false
+        }
         tasks[todoListID] = [newTask, ...tasks[todoListID]]
         setTasks({...tasks})
     }
@@ -81,15 +78,45 @@ function App() {
         }
     }
 
+    function changeTaskTitle(taskID: string, newTitle: string, todoListID: string) {
+        const todoListTasks = tasks[todoListID]
+        const task = todoListTasks.find(task => task.id === taskID)
+        if (task) {
+            task.title = newTitle;
+            setTasks({...tasks})
+        }
+    }
+
     function removeTodoLists(todoListID: string) {
         setTodoList(todoLists.filter(tl => tl.id !== todoListID))
         delete tasks[todoListID]
         setTasks({...tasks})
     }
 
+    function changeTodoListTitle(todoListID: string, newTitle: string) {
+        const todolist = todoLists.find(tl => tl.id === todoListID)
+        if (todolist) {
+            todolist.title = newTitle
+            setTodoList([...todoLists])
+        }
+    }
+
+    function addTodolist(title: string) {
+        let todoList: TodolistType = {
+            id: v1(),
+            filter: "all",
+            title: title
+        }
+        setTodoList([todoList, ...todoLists])
+        setTasks({
+            ...tasks,
+            [todoList.id]: []
+        })
+    }
+
     return (
         <div className="App">
-
+            <AddItemForm addItem={addTodolist}/>
             {
                 todoLists.map(tl => {
                     let tasksForTodolist = tasks[tl.id]
@@ -99,7 +126,7 @@ function App() {
                     if (tl.filter === "completed") {
                         tasksForTodolist = tasks[tl.id].filter(task => task.isDone)
                     }
-                    return(
+                    return (
                         <TodoList
                             key={tl.id}
                             id={tl.id}
@@ -111,17 +138,24 @@ function App() {
                             changeFilter={changeFilter}
                             changeTasksStatus={changeTasksStatus}
                             removeTodoLists={removeTodoLists}
+                            changeTaskTitle={changeTaskTitle}
+                            changeTodoListTitle={changeTodoListTitle}
                         />
                     )
                 })
             }
-
+            <div>
+                Литература
+                Химия
+                Черчение
+                Биология
+                Исория
+            </div>
         </div>
     );
 }
 
 export default App;
-
 
 
 

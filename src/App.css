@@ -13,8 +13,8 @@ body {
   width: auto;
   margin: 20px;
   padding: 20px;
-  border: 3px solid #fff; /* Белая рамка */
-  border-radius: 10px; /* Радиус скругления */
+  /*border: 3px solid #fff; */
+  /*border-radius: 10px; */
   position: relative;
   white-space: pre-wrap;
 }
