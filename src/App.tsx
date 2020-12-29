@@ -12,25 +12,24 @@ export type TaskType = {
     isDone: boolean
 };
 export type FilterValuesType = "all" | "active" | "completed"
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
 }
-type TaskStateTape = {
+export type TaskStateTape = {
     [key: string]: Array<TaskType>
 }
-
 function App() {
-
+    // BLL
     const todoListID1 = v1();
     const todoListID2 = v1();
 
-    let [todoLists, setTodoList] = useState<Array<TodolistType>>([
+    //state
+    const [todoLists, setTodoList] = useState<Array<TodolistType>>([
         {id: todoListID1, title: "What to learn", filter: "all"},
         {id: todoListID2, title: "What to buy", filter: "all"}
     ])
-
     const [tasks, setTasks] = useState<TaskStateTape>({
         [todoListID1]: [
             {id: v1(), title: "React", isDone: false},
@@ -45,22 +44,12 @@ function App() {
             {id: v1(), title: "Chips", isDone: true},
         ]
     })
-
-    function changeFilter(newFilterValue: FilterValuesType, todoListID: string) {
-        const todoList = todoLists.find(tl => tl.id === todoListID)
-        if (todoList) {
-            todoList.filter = newFilterValue
-            setTodoList([...todoLists])
-        }
-    }
+    //оброботчики
 
     function removeTask(taskID: string, todoListID: string) {
         tasks[todoListID] = tasks[todoListID].filter(task => task.id !== taskID)
-        /*const todoListTasks = tasks[todoListID]
-        todoListTasks.filter(t => t.id !== taskID)*/
         setTasks({...tasks})
     }
-
     function addTask(title: string, todoListID: string) {
         let newTask: TaskType = {
             id: v1(),
@@ -70,7 +59,6 @@ function App() {
         tasks[todoListID] = [newTask, ...tasks[todoListID]]
         setTasks({...tasks})
     }
-
     function changeTasksStatus(taskID: string, isDone: boolean, todoListID: string) {
         const todoListTasks = tasks[todoListID]
         const task = todoListTasks.find(task => task.id === taskID)
@@ -79,7 +67,6 @@ function App() {
             setTasks({...tasks})
         }
     }
-
     function changeTaskTitle(taskID: string, newTitle: string, todoListID: string) {
         const todoListTasks = tasks[todoListID]
         const task = todoListTasks.find(task => task.id === taskID)
@@ -89,12 +76,12 @@ function App() {
         }
     }
 
+
     function removeTodoLists(todoListID: string) {
         setTodoList(todoLists.filter(tl => tl.id !== todoListID))
         delete tasks[todoListID]
         setTasks({...tasks})
     }
-
     function changeTodoListTitle(todoListID: string, newTitle: string) {
         const todolist = todoLists.find(tl => tl.id === todoListID)
         if (todolist) {
@@ -102,7 +89,6 @@ function App() {
             setTodoList([...todoLists])
         }
     }
-
     function addTodolist(title: string) {
         let todoList: TodolistType = {
             id: v1(),
@@ -115,7 +101,16 @@ function App() {
             [todoList.id]: []
         })
     }
+    function changeFilter(newFilterValue: FilterValuesType, todoListID: string) {
+        const todoList = todoLists.find(tl => tl.id === todoListID)
+        if (todoList) {
+            todoList.filter = newFilterValue
+            setTodoList([...todoLists])
+        }
+    }
 
+
+    // CRUD
     return (
         <div className="App">
             <AppBar position="static">
